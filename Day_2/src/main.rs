@@ -51,4 +51,5 @@ fn main() {
    }
 
    println!("{safe_count}");
+   
 }
