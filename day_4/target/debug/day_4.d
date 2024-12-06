@@ -1,1 +1,1 @@
-/data/data/com.termux/files/home/rust/aoc/day_4/target/debug/day_4: /data/data/com.termux/files/home/rust/aoc/day_4/src/main.rs
+/home/maxfr/rust/Advent-of-Code/day_4/target/debug/day_4: /home/maxfr/rust/Advent-of-Code/day_4/src/main.rs
