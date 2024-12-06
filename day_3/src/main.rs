@@ -1,49 +1,86 @@
 use std::fs;
 
-fn main() {
+
+enum EnableCmd{
+    Do,
+    Dont,
+    None
+
+}
+
+fn main(){
     let data = fs::read_to_string("data.txt").unwrap();
-    let sum = 0;
+    //println!("{data}");
+
+    let comp_vec = vec!['m', 'u', 'l', '(', ',', ')',' '];
+    let comp_disable = vec!['d','o','n','\'','t','(',')',' '];
+    let comp_enable = vec!['d','o','(',')',' '];
+    
+    let mut comp_index = 0;
+
+   /*let mut enable_index = 0;
+    let mut disable_index = 0;
+    let mut is_do;
+    let mut is_dont ;*/
 
     let mut num_a = String::new();
     let mut num_b = String::new();
+    let mut end;
+    let mut sum = 0;
+    let mut enabled=true;
 
-    let comp_vec = vec!['m', 'u', 'l', '(', ',', ')'];
+    for (_i,c) in data.chars().into_iter().enumerate() {
+        
+        
+     
 
-    let mut comp_index = 0;
-    let mut arg_vec: Vec<char> = vec![];
-    let mut args_taken = false;
-    let mut old_index = comp_index;
-    for c in data.chars().into_iter() {
+
+        
+     
         if c == comp_vec[comp_index] {
             comp_index += 1;
+            end = false;
         } else {
-            comp_index = 0;
-            arg_vec = vec![];
+            end = true;
         }
 
-        if !(args_taken && comp_vec[comp_index] == '(') {
-            arg_vec.push(c);
+        if comp_index == 4 && c.is_numeric() {
+            num_a.push(c);
+            end = false;
+            
+            
         }
-        if old_index != comp_index {
-            old_index = comp_index;
-            args_taken = true;
-            if comp_vec[comp_index] == '(' {
-                arg_vec.iter().for_each(|v| {
-                    num_a.push(*v);
-                });
-                arg_vec = vec![];
-            } else {
-                arg_vec.iter().for_each(|v| {
-                    num_b.push(*v);
-                });
 
-                arg_vec = vec![];
-            }
+        if comp_index == 5 && c.is_numeric() {
+            num_b.push(c);
+            end = false;
         }
-        println!("{}", comp_vec[comp_index]);
-        if comp_vec[comp_index] == ')' {
-            println!("a: {num_a}, b: {num_b}");
+
+
+        //println!("durchgang: {_i}, comp_index: {comp_index}, char: {c}, comp_char: {}, end: {end}",comp_vec[comp_index]);
+
+        
+
+        if comp_index == 6 && enabled {
+            println!("num_a: {num_a}, num_b: {num_b}");
+            sum += num_a.parse::<i32>().unwrap() * num_b.parse::<i32>().unwrap();
+            end = true;
+        }
+        if end {
             comp_index = 0;
+            num_a = String::new();
+            num_b = String::new();
         }
+
+
+
     }
+
+    println!("sum: {sum}");
+
+
 }
+
+
+
+
